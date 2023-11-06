@@ -17,15 +17,12 @@ def clean_up():
             if char in allowed_characters:
                 cleaned_line += char
         cleaned += cleaned_line
-    sf = open("student_names.txt, w")
-    print(cleaned, file=sf)
+    sf = open("student_names.txt", 'w')
+    sf.write(cleaned)
 
     # lower case char, upper case char, blank, full stop - valid characters
     # insert code here to clean the file as per question 1
     return cleaned
 
-    # lower case char, upper case char, blank, full stop - valid characters
-    # insert code here to clean the file as per question 1
-    return cleaned
 if __name__ == "__main__":
     clean_up()
