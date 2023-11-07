@@ -6,9 +6,8 @@ def clean_up():
         cleaned is used store the wanted characters
         :return: cleaned
         """
-    allowed_characters = list("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ .\n")
+    allowed_characters = list("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ. \n")
     f = open("text_to_clean.txt", 'r')
-    print(f)
     cleaned = ""
     text = f.read()
     for line in text:
@@ -17,36 +16,78 @@ def clean_up():
             if char in allowed_characters:
                 cleaned_line += char
         cleaned += cleaned_line
+    cleaned += "\n"
     sf = open("student_names.txt", 'w')
     sf.write(cleaned)
+    sf.close()
 
     # lower case char, upper case char, blank, full stop - valid characters
     # insert code here to clean the file as per question 1
     return cleaned
 
+
 def build_id():
-    """
-    f refers to the student_names.txt file created in clean_up()
-    id_list is the list return with the id's created from the name / surname of each student
-    :return: id_list
-    """
-    f = ""
+    f = open('student_names.txt', 'r')
     id_list = []
-    #insert code here to create the id's as per question 2
+
+    lines = f.read()
+    lines = lines.split("\n")
+
+    for line in lines:
+        name_parts = line.split()
+        num_parts = len(name_parts)
+
+        if num_parts == 3:
+            initials = [part[0].lower() for part in name_parts if part]
+            id_str = initials[0]+initials[1]+initials[2]
+        elif num_parts == 2:
+            id_str = name_parts[0][0].lower() + 'x' + name_parts[1][0].lower()
+
+        if id_str and len(line) > 0:
+            id_list.append(id_str)
+
+    f.close()
     return id_list
 
 
 def validate_password(password):
-    """
-    illegal_password is the list that is built up showing the invalid parts of the password
-    Validate the password to verify if it is legal or not as per Question 3
-    There is a password.txt file given to you to verify invalid passwords
-    :param password: make use of the password found in main(), the test file will also have additional passwords to test
-    :return: illegal_password
-    """
     illegal_password = []
-    #insert code here to validate all the conditions of the password as per question 3
+
+    # Check password length
+    if len(password) < 8:
+        illegal_password.append("TOO SHORT")
+    if len(password) > 12:
+        illegal_password.append("TOO LONG")
+
+    has_upper = False
+    has_lower = False
+
+    for char in password:
+        if char.isdigit():
+            continue
+        elif 'A' <= char <= 'Z':
+            has_upper = True
+        elif 'a' <= char <= 'z':
+            has_lower = True
+        elif char == '_':
+            continue
+        else:
+            illegal_password.append("WRONG CHARACTERS")
+
+    if not has_upper or not has_lower:
+        illegal_password.append("NOT MIXED CASE")
+
+    if password[0].isdigit():
+        illegal_password.append("LEADING DIGIT")
+
+    common_passwords = open("password.txt", 'r').read().split("\n")
+
+    if password in common_passwords:
+        illegal_password.append("CANNOT MAKE USE OF THIS PASSWORD")
+
     return illegal_password
+
+
 def create_unique(id_list):
     """
     Adhere to the instructions in question 4 to determine a unique id for each student
@@ -55,7 +96,31 @@ def create_unique(id_list):
     :param id_list: the id_list that was returned in build_id() is used here to create the unique ids
     :return: final_list is returned and this list contains all of the unique student ids
     """
+    # id_list = ["mas", "axj", "drs", "axt", "mas", "mas", "jxs", "hxc", "axg"]
     final_list = []
+    unique_ids_str = ""
+    emails_str = ""
+    for id in id_list:
+        id_suffix = 0
+        current_id = id + "0000"
+        while current_id in final_list:
+            current_id = id
+            id_suffix += 1
+            for x in range(4-len(str(id_suffix))):
+                current_id += "0"
+            current_id += str(id_suffix)
+        final_list.append(current_id)
+    for final_id in final_list:
+        unique_ids_str += final_id + "\n"
+        emails_str += final_id + "@student.bham.ac.uk\n"
+
+    i = open("unique_ids.txt", 'w')
+    i.write(unique_ids_str)
+    i.close()
+    f = open("create_emails.txt", 'w')
+    f.write(emails_str)
+    f.close()
+
     # insert code here to create unique ids
     return final_list
 def create_short_address():
