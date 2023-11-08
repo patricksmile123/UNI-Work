@@ -1,21 +1,20 @@
 import assignment1
 
-
 class TestClass:
 
     def test_clean_up(self):
         assert assignment1.clean_up() == ('Michael Adam Smith\n'
                                           'Amy Jones\n'
-                                          'David Robert Simmons\n'
-                                          'Andy Turing\n'
                                           'Mary Ann Smith\n'
                                           'Mark Ant Sweepy\n'
                                           'Jarryd Stephenson\n'
                                           'Hannah Chetty\n'
-                                          'Anya Gonzalez\n')
+                                          'Anya Gonzalez\n'
+                                          'Jon Stewart\n'
+                                          'Jenny Squi\n')
 
     def test_build_id(self):
-        assert assignment1.build_id() == ["mas", "axj", "drs", "axt", "mas", "mas", "jxs", "hxc", "axg"]
+        assert assignment1.build_id() == ["mas", "axj", "mas", "mas", "jxs", "hxc", "axg", "jxs", "jxs"]
 
     def test_validate_passwordShort(self):
         assert assignment1.validate_password("asdABC") == ['TOO SHORT']
@@ -36,11 +35,12 @@ class TestClass:
         assert assignment1.validate_password("Password123") == ['CANNOT MAKE USE OF THIS PASSWORD']
 
     def test_create_unique(self):
-        id_list = ["mas", "axj", "drs", "axt", "mas", "mas", "jxs", "hxc", "axg", "mas", "axj"]
+        id_list = ["mas", "axj", "mas", "mas", "jxs", "hxc", "axg", "jxs", "jxs"]
         assert assignment1.create_unique(id_list).count('mas0001') > 0
         assert assignment1.create_unique(id_list).count('mas0002') > 0
-        assert assignment1.create_unique(id_list).count('mas0003') > 0
-        assert assignment1.create_unique(id_list).count('axj0001') > 0
+        assert assignment1.create_unique(id_list).count('jxs0001') > 0
+        assert assignment1.create_unique(id_list).count('jxs0002') > 0
+
 
     def test_create_short_address(self):
         assert assignment1.create_short_address() == [['2 Smith street', 'B312'], ['25 Eddie drive', 'C912WW'],
@@ -69,13 +69,12 @@ class TestClass:
                       ['122 Abex road', 'A432JH'], ['55 Kings street', 'M432JK'], ['2 Canal street', 'M222KL'],
                       ['234 Bold street', 'L128JK'], \
                       ['5 Abbey road', '1P63JA']]
-
-        assert assignment1.ids_addrs(short_addr) == {"mas0000": ['2 Smith street', 'B312AB'],
-                                                 "axj0000": ['25 Eddie drive', 'C912WW'], \
-                                                 "drs0000": ['1 Short street', 'C112GH'],
-                                                 "axt0000": ['5 Long street', 'L236QA'], \
-                                                 "jxs0000": ['122 Abex road', 'A432JH'],
-                                                 "hxc0000": ['55 Kings street', 'M432JK'], \
-                                                 "axg0000": ['2 Canal street', 'M222KL'],
-                                                 "mas0001": ['234 Bold street', 'L128JK'], \
-                                                 "mas0002": ['5 Abbey road', '1P63JA'], }
+        assert assignment1.ids_addrs(short_addr) == {'axg0000': ['122 Abex road', 'A432JH'],
+                                                     'axj0000': ['25 Eddie drive', 'C912WW'],
+                                                     'hxc0000': ['5 Long street', 'L236QA'],
+                                                     'jxs0000': ['1 Short street', 'C112GH'],
+                                                     'jxs0001': ['234 Bold street', 'L128JK'],
+                                                     'jxs0002': ['5 Abbey road', '1P63JA'],
+                                                     'mas0000': ['2 Smith street', 'B312AB'],
+                                                     'mas0001': ['55 Kings street', 'M432JK'],
+                                                     'mas0002': ['2 Canal street', 'M222KL']}

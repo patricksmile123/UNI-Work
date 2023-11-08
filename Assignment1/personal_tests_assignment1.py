@@ -1,28 +1,35 @@
-def clean_up():
+def create_short_address():
     """
-        f refers to text_to_clean.txt
-        sf refers to student_names.txt
-        use text to read in the appropriate file
-        cleaned is used store the wanted characters
-        :return: cleaned
-        """
-    allowed_characters = list("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ .\n")
-    f = open("text_to_clean.txt", 'r')
-    print(f)
-    cleaned = ""
+    Open the addresses.txt file correctly where f = the file to be opened
+    split the address up so that only the first part and the postcode make up the shorter address
+    :return: split_addrs is returned where the address1, postcode make up the list - this list is used for validate_pcode()
+    """
+    f = open("addresses.txt", 'r')
     text = f.read()
-    for line in text:
-        cleaned_line = ""
-        for char in line:
-            if char in allowed_characters:
-                cleaned_line += char
-        cleaned += cleaned_line
-    sf = open("student_names.txt", 'w')
-    sf.write(cleaned)
+    # lines = text.split('\n')
+    # split_addrs = []
+    # for line in lines:
+    #     if line:
+    #         parts = line.split(',')
+    #         print(parts)
+    #         address_part = parts[0]
+    #         postcode = parts[-1][1:]
+    #         short_address = [address_part, postcode]
+    #         split_addrs.append(short_address)
+    # print(split_addrs)
+    # return split_addrs
+    addresses = []
+    split_addrs = []
+    for addresses in text:
+        addresses = text.split('\n')
+    for i in addresses:
+        test = i.split(',')
+    for answer in addresses:
+        split_addrs.append(answer.split(",")[0])
 
-    # lower case char, upper case char, blank, full stop - valid characters
-    # insert code here to clean the file as per question 1
-    return cleaned
+    # insert code here to create the shorter address
+    return split_addrs
+
 
 if __name__ == "__main__":
-    clean_up()
+    create_short_address()

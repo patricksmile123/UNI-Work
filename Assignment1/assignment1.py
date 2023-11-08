@@ -129,10 +129,17 @@ def create_short_address():
     split the address up so that only the first part and the postcode make up the shorter address
     :return: split_addrs is returned where the address1, postcode make up the list - this list is used for validate_pcode()
     """
-    f = " "
+    f = open("addresses.txt", 'r')
     text = f.read()
+    lines = text.split('\n')
     split_addrs = []
-    # insert code here to create the shorter address
+    for line in lines:
+        if line:
+            parts = line.split(',')
+            address_part = parts[0]
+            postcode = parts[-1][1:]
+            short_address = [address_part, postcode]
+            split_addrs.append(short_address)
     return split_addrs
 
 def validate_pcode(split_addrs):
@@ -142,8 +149,41 @@ def validate_pcode(split_addrs):
     :return: validate_pcode is a list that contains True False values for each postcode that is validated - see question 6
     """
     validate_pcode = []
-    # insert code here to validate each character of the postcode
+    for index in range(len(split_addrs)):
+        _, postcode = split_addrs[index]
+        cleaned_postcode = ''
+        for char in postcode:
+            if char not in " \n\t\r":
+                cleaned_postcode += char
+        postcode = cleaned_postcode
+
+        is_length_six = len(postcode) == 6
+        if not is_length_six:
+            postcode = "$$$$$$"
+        is_length_six = str(is_length_six)
+
+        is_first_uppercase_alpha = str('A' <= postcode[0] <= 'Z')
+
+        are_middle_chars_digits = "True"
+        for char in postcode[1:4]:
+            if not ('0' <= char <= '9'):
+                are_middle_chars_digits = "False"
+                break
+
+        are_last_two_uppercase_alpha = "True"
+        for char in postcode[4:]:
+            if not ('A' <= char <= 'Z'):
+                are_last_two_uppercase_alpha = "False"
+                break
+
+        validate_pcode.append(index)
+        validate_pcode.append(is_length_six)
+        validate_pcode.append(is_first_uppercase_alpha)
+        validate_pcode.append(are_middle_chars_digits)
+        validate_pcode.append(are_last_two_uppercase_alpha)
+
     return validate_pcode
+
 
 def ids_addrs(short_addr):
     """
@@ -151,11 +191,15 @@ def ids_addrs(short_addr):
     :param short_addr: passed in from main() - generated from create_short_address()
     :return: combo is the key / value pair, i.e. unique id and the short addr for each student
     """
-    f = ""
+    f = open("unique_ids.txt", 'r')
+    short_addr = split_addrs
     ids = f.read()
-    combo = {}
-    # insert code here to create combo
+
+    for list in ids:
+        combo = {list: short_addr}
+
     return combo
+    # insert code here to create combo
 
 def main():
     id_list = []
