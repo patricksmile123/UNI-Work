@@ -20,6 +20,7 @@ def clean_up():
     sf = open("student_names.txt", 'w')
     sf.write(cleaned)
     sf.close()
+    f.close()
 
     # lower case char, upper case char, blank, full stop - valid characters
     # insert code here to clean the file as per question 1
@@ -80,11 +81,13 @@ def validate_password(password):
     if password[0].isdigit():
         illegal_password.append("LEADING DIGIT")
 
-    common_passwords = open("password.txt", 'r').read().split("\n")
+    f = open("password.txt", 'r')
+    common_passwords = f.read()
+    common_passwords.split("\n")
+    f.close()
 
     if password in common_passwords:
         illegal_password.append("CANNOT MAKE USE OF THIS PASSWORD")
-
     return illegal_password
 
 
@@ -132,6 +135,7 @@ def create_short_address():
     f = open("addresses.txt", 'r')
     text = f.read()
     lines = text.split('\n')
+    f.close()
     split_addrs = []
     for line in lines:
         if line:
@@ -181,7 +185,6 @@ def validate_pcode(split_addrs):
         validate_pcode.append(is_first_uppercase_alpha)
         validate_pcode.append(are_middle_chars_digits)
         validate_pcode.append(are_last_two_uppercase_alpha)
-
     return validate_pcode
 
 
@@ -192,12 +195,17 @@ def ids_addrs(short_addr):
     :return: combo is the key / value pair, i.e. unique id and the short addr for each student
     """
     f = open("unique_ids.txt", 'r')
-    short_addr = split_addrs
-    ids = f.read()
+    ids = f.read().split("\n")
+    f.close()
+    combo = {}
 
-    for list in ids:
-        combo = {list: short_addr}
+    index_counter = 0
 
+    address_from_param = short_addr
+
+    for address in address_from_param:
+        combo[ids[index_counter]] = address
+        index_counter += 1
     return combo
     # insert code here to create combo
 
