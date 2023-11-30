@@ -199,13 +199,11 @@ def ids_addrs(short_addr):
     f.close()
     combo = {}
 
-    index_counter = 0
+    idx = 0
 
-    address_from_param = short_addr
-
-    for address in address_from_param:
-        combo[ids[index_counter]] = address
-        index_counter += 1
+    for address in short_addr:
+        combo[ids[idx]] = address
+        idx += 1
     return combo
     # insert code here to create combo
 
