@@ -1,12 +1,15 @@
-def are_you_playing_banjo(name):
-    if name[0] == "R":
-        name = print(name + " plays banjo")
-    elif name[0] == "r":
-        name = print(name + " plays banjo")
+def lovefunc(flower1, flower2):
+    # ...
+    if (flower1 % 2) == 0:
+        true_flower = True
     else:
-        name = print(name + " does not play banjo")
-    str(name)
-    return name
+        true_flower = False
+    if (flower2 % 1):
+        true_flower1 = True
+    else:
+        true_flower1 = False
 
-name = "adam"
-are_you_playing_banjo(name)
+    if true_flower1 == true_flower:
+        return True
+    else:
+        return False
