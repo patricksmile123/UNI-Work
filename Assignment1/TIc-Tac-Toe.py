@@ -10,7 +10,7 @@ def print_board(square_board):
 
         print()
 
-
+current_player = "X"
 def play():
     which_box = input("Where would you like to play?, select from 1 to 9")
 
