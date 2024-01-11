@@ -1,5 +1,4 @@
 
-
 # import sys
 # def main():
 #     while True:
@@ -20,10 +19,14 @@
 
 
 def print_board():
-    chess_board = [["r", "n", "b", "k", "q", "b", "n", "r"], ["p", "p", "p", "p", "p", "p", "p", "p"],
-                   [" ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " "],
-                   [" ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " "],
-                   ["P", "P", "P", "P", "P", "P", "P", "P"], ["R", "N", "B", "Q", "K", "B", "N", "R"]]
+    chess_board = [["r", "n", "b", "k", "q", "b", "n", "r"],
+                   ["p", "p", "p", "p", "p", "p", "p", "p"],
+                   [" ", " ", " ", " ", " ", " ", " ", " "],
+                   [" ", " ", " ", " ", " ", " ", " ", " "],
+                   [" ", " ", " ", " ", " ", " ", " ", " "],
+                   [" ", " ", " ", " ", " ", " ", " ", " "],
+                   ["P", "P", "P", "P", "P", "P", "P", "P"],
+                   ["R", "N", "B", "Q", "K", "B", "N", "R"]]
     for row in chess_board:
         for item in row:
             print(item, end=" ")
@@ -49,3 +52,12 @@ def find_piece(move):
         column = move[3]
     if len(move) == 4 and take != "x":
         which_piece = [1]
+
+def chess_notation(position):
+    rank = {"8": 0, "7": 1, "6": 2, "5": 3,
+            "4": 4, "3": 5, "2": 6, "1": 7}
+    file = {"a": 0, "b": 1, "c": 2, "d": 3, "e": 4,
+            "f": 5, "g": 6, "h": 7}
+    row = [rank[position[1]]]
+    column = [file[position[0]]]
+    return row, column
